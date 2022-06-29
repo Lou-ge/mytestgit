@@ -96,7 +96,7 @@ public interface IYsmxMaintain {
 	public void save_RequiresNew(Logger logger,
 			IplatFormEntry iIplatFormEntry, HashMap<String, Object> paramMap,
 			List<String> bvoPKs, List<AggReceivableBillVO> savevos,
-			AggReceivableBillVO aggReceivableBillVO);
+			AggReceivableBillVO aggReceivableBillVO, int[] logInfoArray);
 	
 	public void approve_RequiresNew(Logger logger,
 			IplatFormEntry iIplatFormEntry, HashMap<String, Object> paramMap,
