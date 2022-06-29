@@ -1,0 +1,104 @@
+package nc.itf.arap;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import nc.arap.gtapps.utils.RecBillVO;
+import nc.itf.uap.pf.IplatFormEntry;
+import nc.ui.querytemplate.querytree.IQueryScheme;
+import nc.vo.arap.receivable.AggReceivableBillVO;
+import nc.vo.arap.ysmx.AggYsmxHVO;
+import nc.vo.arap.ysmx.YsmxHVO;
+import nc.vo.pub.BusinessException;
+import nc.vo.pub.lang.UFBoolean;
+
+public interface IYsmxMaintain {
+
+	public void delete(AggYsmxHVO[] clientFullVOs,
+			AggYsmxHVO[] originBills) throws BusinessException;
+
+	public AggYsmxHVO[] insert(AggYsmxHVO[] clientFullVOs,
+			AggYsmxHVO[] originBills) throws BusinessException;
+
+	public AggYsmxHVO[] update(AggYsmxHVO[] clientFullVOs,
+			AggYsmxHVO[] originBills) throws BusinessException;
+
+	public AggYsmxHVO[] query(IQueryScheme queryScheme)
+			throws BusinessException;
+
+	public AggYsmxHVO[] save(AggYsmxHVO[] clientFullVOs,
+			AggYsmxHVO[] originBills) throws BusinessException;
+
+	public AggYsmxHVO[] unsave(AggYsmxHVO[] clientFullVOs,
+			AggYsmxHVO[] originBills) throws BusinessException;
+
+	public AggYsmxHVO[] approve(AggYsmxHVO[] clientFullVOs,
+			AggYsmxHVO[] originBills) throws BusinessException;
+
+	public AggYsmxHVO[] unapprove(AggYsmxHVO[] clientFullVOs,
+			AggYsmxHVO[] originBills) throws BusinessException;
+	
+	 
+	/**
+	 * 保存接口
+	 * @param fromJson
+	 * @return
+	 * @throws BusinessException
+	 */
+	public Boolean insertHVO(RecBillVO fromJson,Logger logger) throws BusinessException;
+	/**
+	 * 修改接口
+	 * @param fromJson
+	 * @return
+	 * @throws BusinessException
+	 */
+	public Boolean updateHVO(RecBillVO fromJson,Logger logger) throws BusinessException;
+	
+	/**
+	 * 删除接口
+	 * @param fromJson
+	 * @param logger
+	 * @return
+	 * @throws BusinessException
+	 */
+
+	public Boolean deleteHVO(Map<Object, Object> jsonMap,Logger logger) throws BusinessException;
+	
+	/**
+	 * 2 查询未标记数据,[ISRECBILL 是否生成应收单] 
+	 * 不要参数了 直接查N的 
+	 * @return
+	 * @throws BusinessException
+	 */
+	public List<YsmxHVO> queryAllHVO() throws BusinessException;
+	
+	/** 
+	 * 3 按pk_customer的集合查询数据 
+	 * @param pk_customers
+	 * @return
+	 * @throws BusinessException
+	 */
+	public List<YsmxHVO> queryByPkCust(String[] pk_customers) throws BusinessException;
+	
+	/**
+	 * 4 按照单据的PK更新标记 [ISRECBILL 是否生成应收单],返回更新成功数据的PKs
+	 * @param pk_recitems
+	 * @param b UFBoolean.TRUE/UFBoolean.FALSE
+	 * @return
+	 * @throws BusinessException
+	 */
+	public List<String> updateByPk(String[] pk_recitems,UFBoolean b) throws BusinessException;
+	
+	
+	public void save_RequiresNew(Logger logger,
+			IplatFormEntry iIplatFormEntry, HashMap<String, Object> paramMap,
+			List<String> bvoPKs, List<AggReceivableBillVO> savevos,
+			AggReceivableBillVO aggReceivableBillVO);
+	
+	public void approve_RequiresNew(Logger logger,
+			IplatFormEntry iIplatFormEntry, HashMap<String, Object> paramMap,
+			AggReceivableBillVO savevo);
+}
